@@ -1,0 +1,12 @@
+[Unit]
+Description=Server Status (Client Server)
+After=network.target
+
+[Service]
+Type=simple
+IgnoreSIGPIPE=no
+User=
+ExecStart=
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+.idea/
+
+# backup py
+main-server.py
+clinet-server.py
