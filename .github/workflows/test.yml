@@ -14,8 +14,6 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@master
     - name: Install Main server
-      run: sudo bash main-setup.sh
-      working-directory: ./setup
+      run: sudo bash setup/main-setup.sh
     - name: Install Client Server
-      run: sudo bash client-setup.sh localhost
-      working-directory: ./setup
+      run: sudo bash setup/client-setup.sh localhost
