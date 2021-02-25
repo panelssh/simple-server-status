@@ -58,8 +58,7 @@ function install() {
   local DATA
   local RUN_AS
 
-  #SERVER=$(curl -s ifconfig.so)
-  SERVER="localhost"
+  SERVER=$(curl -s ifconfig.so)
 
   if [ -f "$PY_SRC" ]; then
     SKIP=true
@@ -74,10 +73,10 @@ function install() {
 
   if [ -f "${CWD}/src/main.py" ]; then
     sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
-      -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" "${CWD}/src/main.py" >"$PY_SRC"
+      -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" "${CWD}/src/main.py" > "$PY_SRC"
   else
     curl -Ls "https://git.io/main-server" | sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
-      -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" "${CWD}/src/main.py" >"$PY_SRC"
+      -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" > "$PY_SRC"
   fi
 
   # shellcheck disable=SC2001

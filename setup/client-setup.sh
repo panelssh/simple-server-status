@@ -82,7 +82,7 @@ function install() {
 
   curl -Ls "https://git.io/client-server" | sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
     -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" \
-    -e "0,/^HOSTNAME = .*$/s//HOSTNAME = \"${HOSTNAME}\"/" "${CWD}/src/client.py" >"$PY_SRC"
+    -e "0,/^HOSTNAME = .*$/s//HOSTNAME = \"${HOSTNAME}\"/" >"$PY_SRC"
 
   # shellcheck disable=SC2001
   PY_DIST=$(echo "$PY_SRC" | sed -e "s|${CWD}|/usr/local/share|g")
