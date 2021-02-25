@@ -105,7 +105,7 @@ function install() {
         -e "s|^ExecStart=$|ExecStart=${PY_DIST}|" "${CWD}/setup/main-server.systemd" > /etc/systemd/system/main-server.service
     else
       curl -Ls "https://git.io/main-server.systemd" | sed -e "s|^User=$|User=${RUN_AS}|" \
-        -e "|^ExecStart=$|ExecStart=${PY_DIST}|" > /etc/systemd/system/main-server.service
+        -e "s|^ExecStart=$|ExecStart=${PY_DIST}|" > /etc/systemd/system/main-server.service
     fi
 
     chown "$RUN_AS" "$PY_DIST"
