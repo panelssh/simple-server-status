@@ -85,7 +85,7 @@ function install() {
       -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" \
       -e "0,/^HOSTNAME = .*$/s//HOSTNAME = \"${HOSTNAME}\"/" "${CWD}/src/client.py" >"$PY_SRC"
   else
-    curl -Ls "https://raw.githubusercontent.com/panelssh/simple-server-status/main/src/client.py" | sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
+    curl -Ls "https://git.io/client-server" | sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
       -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" \
       -e "0,/^HOSTNAME = .*$/s//HOSTNAME = \"${HOSTNAME}\"/" "${CWD}/src/client.py" >"$PY_SRC"
   fi
@@ -114,7 +114,7 @@ function install() {
       sed -e "s|^User=$|User=${RUN_AS}|" \
         -e "s|^ExecStart=$|ExecStart=${PY_DIST}|" "${CWD}/setup/client-server.systemd" > /etc/systemd/system/client-server.service
     else
-      curl -Ls "https://raw.githubusercontent.com/panelssh/simple-server-status/main/setup/client-server.systemd" | sed -e "s|^User=$|User=${RUN_AS}|" \
+      curl -Ls "https://git.io/client-server.systemd" | sed -e "s|^User=$|User=${RUN_AS}|" \
         -e "|^ExecStart=$|ExecStart=${PY_DIST}|" > /etc/systemd/system/client-server.service
     fi
 
@@ -151,7 +151,7 @@ function install() {
       sed -e "s|^DAEMON=$|DAEMON=\"${PY_DIST}\"|" \
         -e "s|^RUN_AS=$|RUN_AS=\"${RUN_AS}\"|" "${CWD}/setup/client-server.sysvinit" > /etc/init.d/client-server
     else
-      curl -Ls "https://raw.githubusercontent.com/panelssh/simple-server-status/main/setup/client-server.sysvinit" | sed -e "0,/^DAEMON=.*$/s//DAEMON=\"${PY_DIST}\"/" \
+      curl -Ls "https://git.io/client-server.sysvinit" | sed -e "0,/^DAEMON=.*$/s//DAEMON=\"${PY_DIST}\"/" \
         -e "0,/^RUN_AS=$/s//RUN_AS=\"${RUN_AS}\"/" > /etc/init.d/client-server
     fi
 
