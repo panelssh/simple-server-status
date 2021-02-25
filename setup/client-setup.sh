@@ -176,9 +176,6 @@ function uninstall() {
     systemctl disable client-server.service
     sleep 1
 
-    systemctl remove client-server.service
-    sleep 1
-
     systemctl daemon-reload
     sleep 1
 
@@ -188,9 +185,6 @@ function uninstall() {
     sleep 1
 
     update-rc.d client-server disable
-    sleep 1
-
-    update-rc.d client-server remove
     sleep 1
 
     systemctl daemon-reload

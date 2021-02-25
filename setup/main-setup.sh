@@ -183,9 +183,6 @@ function uninstall() {
     systemctl disable main-server.service
     sleep 1
 
-    systemctl remove main-server.service
-    sleep 1
-
     systemctl daemon-reload
     sleep 1
 
@@ -195,9 +192,6 @@ function uninstall() {
     sleep 1
 
     update-rc.d main-server disable
-    sleep 1
-
-    update-rc.d main-server remove
     sleep 1
 
     systemctl daemon-reload
