@@ -94,9 +94,6 @@ function install() {
   PY_DIST=$(echo "$PY_SRC" | sed -e "s|${CWD}|/usr/local/share|g")
   cp -a "$PY_SRC" "$PY_DIST"
 
-  mkdir -p /usr/local/dist
-  cp "${CWD}/dist/servers.json" /usr/local/dist/servers.json
-
   # TODO: add interactive
   RUN_AS="root"
 
