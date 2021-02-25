@@ -65,8 +65,7 @@ function install() {
     SERVER=$1
   fi
 
-  #HOSTNAME=$(curl -s ifconfig.so)
-  HOSTNAME="localhost"
+  HOSTNAME=$(curl -s ifconfig.so)
 
   if [ -f "$PY_SRC" ]; then
     SKIP=true
@@ -80,15 +79,10 @@ function install() {
     PORT=$(echo "$DATA" | sed -n "s/SERVER_PORT\( \|\)=\( \|\)//p" | tr -d '"')
   fi
 
-  if [ -f "${CWD}/src/client.py" ]; then
-    sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
-      -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" \
-      -e "0,/^HOSTNAME = .*$/s//HOSTNAME = \"${HOSTNAME}\"/" "${CWD}/src/client.py" >"$PY_SRC"
-  else
-    curl -Ls "https://git.io/client-server" | sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
-      -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" \
-      -e "0,/^HOSTNAME = .*$/s//HOSTNAME = \"${HOSTNAME}\"/" "${CWD}/src/client.py" >"$PY_SRC"
-  fi
+
+  curl -Ls "https://git.io/client-server" | sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
+    -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" \
+    -e "0,/^HOSTNAME = .*$/s//HOSTNAME = \"${HOSTNAME}\"/" "${CWD}/src/client.py" >"$PY_SRC"
 
   # shellcheck disable=SC2001
   PY_DIST=$(echo "$PY_SRC" | sed -e "s|${CWD}|/usr/local/share|g")
@@ -107,13 +101,9 @@ function install() {
       REPLACE=true
     fi
 
-    if [ -f "${CWD}/setup/client-server.systemd" ]; then
-      sed -e "s|^User=$|User=${RUN_AS}|" \
-        -e "s|^ExecStart=$|ExecStart=${PY_DIST}|" "${CWD}/setup/client-server.systemd" > /etc/systemd/system/client-server.service
-    else
-      curl -Ls "https://git.io/client-server.systemd" | sed -e "s|^User=$|User=${RUN_AS}|" \
-        -e "s|^ExecStart=$|ExecStart=${PY_DIST}|" > /etc/systemd/system/client-server.service
-    fi
+
+    curl -Ls "https://git.io/client-server.systemd" | sed -e "s|^User=$|User=${RUN_AS}|" \
+      -e "s|^ExecStart=$|ExecStart=${PY_DIST}|" > /etc/systemd/system/client-server.service
 
     chown "$RUN_AS" "$PY_DIST"
     chmod +x "$PY_DIST"
@@ -144,13 +134,9 @@ function install() {
       REPLACE=true
     fi
 
-    if [ -f "${CWD}/setup/client-server.sysvinit" ]; then
-      sed -e "s|^DAEMON=$|DAEMON=\"${PY_DIST}\"|" \
-        -e "s|^RUN_AS=$|RUN_AS=\"${RUN_AS}\"|" "${CWD}/setup/client-server.sysvinit" > /etc/init.d/client-server
-    else
-      curl -Ls "https://git.io/client-server.sysvinit" | sed -e sed -e "s|^DAEMON=$|DAEMON=\"${PY_DIST}\"|" \
-        -e "s|^RUN_AS=$|RUN_AS=\"${RUN_AS}\"|" > /etc/init.d/client-server
-    fi
+
+    curl -Ls "https://git.io/client-server.sysvinit" | sed -e sed -e "s|^DAEMON=$|DAEMON=\"${PY_DIST}\"|" \
+      -e "s|^RUN_AS=$|RUN_AS=\"${RUN_AS}\"|" > /etc/init.d/client-server
 
     chown "$RUN_AS" "$PY_DIST"
     chmod +x "$PY_DIST"
