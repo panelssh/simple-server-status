@@ -76,7 +76,7 @@ function install() {
     sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
       -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" "${CWD}/src/main.py" >"$PY_SRC"
   else
-    curl -L "https://raw.githubusercontent.com/panelssh/simple-server-status/main/src/main.py" | sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
+    curl -Ls "https://raw.githubusercontent.com/panelssh/simple-server-status/main/src/main.py" | sed -e "0,/^SERVER_HOST = .*$/s//SERVER_HOST = \"${SERVER}\"/" \
       -e "0,/^SERVER_PORT = .*$/s//SERVER_PORT = ${PORT}/" "${CWD}/src/main.py" >"$PY_SRC"
   fi
 
@@ -104,7 +104,7 @@ function install() {
       sed -e "s|^User=$|User=${RUN_AS}|" \
         -e "s|^ExecStart=$|ExecStart=${PY_DIST}|" "${CWD}/setup/main-server.systemd" > /etc/systemd/system/main-server.service
     else
-      curl -L "https://raw.githubusercontent.com/panelssh/simple-server-status/main/setup/main-server.systemd" | sed -e "s|^User=$|User=${RUN_AS}|" \
+      curl -Ls "https://raw.githubusercontent.com/panelssh/simple-server-status/main/setup/main-server.systemd" | sed -e "s|^User=$|User=${RUN_AS}|" \
         -e "|^ExecStart=$|ExecStart=${PY_DIST}|" > /etc/systemd/system/main-server.service
     fi
 
@@ -141,7 +141,7 @@ function install() {
       sed -e "s|^DAEMON=$|DAEMON=\"${PY_DIST}\"|" \
         -e "s|^RUN_AS=$|RUN_AS=\"${RUN_AS}\"|" "${CWD}/setup/main-server.sysvinit" > /etc/init.d/main-server
     else
-      curl -L "https://raw.githubusercontent.com/panelssh/simple-server-status/main/setup/main-server.sysvinit" | sed -e "0,/^DAEMON=.*$/s//DAEMON=\"${PY_DIST}\"/" \
+      curl -Ls "https://raw.githubusercontent.com/panelssh/simple-server-status/main/setup/main-server.sysvinit" | sed -e "0,/^DAEMON=.*$/s//DAEMON=\"${PY_DIST}\"/" \
         -e "0,/^RUN_AS=$/s//RUN_AS=\"${RUN_AS}\"/" > /etc/init.d/main-server
     fi
 
